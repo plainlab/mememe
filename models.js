@@ -20,6 +20,28 @@ const Team = sequelize.define("Team", {
     },
 });
 
+const User = sequelize.define("User", {
+    userId: {
+        type: DataTypes.STRING,
+        primaryKey: true,
+    },
+    teamId: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    realName: {
+        type: DataTypes.STRING,
+    },
+    profileImage: {
+        type: DataTypes.TEXT,
+    },
+});
+
+
 // Migrate
 (async () => {
     await sequelize.sync();
@@ -27,4 +49,5 @@ const Team = sequelize.define("Team", {
 
 module.exports = {
     Team,
+    User,
 };

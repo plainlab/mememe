@@ -28,5 +28,8 @@
     "pg-hstore": "^2.3.4",
     "request": "^2.88.2",
     "sequelize": "^6.21.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.20.0"
   }
 }
