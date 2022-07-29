@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const { SlackAdapter } = require('botbuilder-adapter-slack');
 const { Botkit } = require('botkit');
+const path = require('path');
 const svc = require('./services');
 const meme = require('./meme');
 const util = require('./util');
@@ -25,6 +26,11 @@ const adapter = new SlackAdapter({
 
 const controller = new Botkit({
     adapter,
+});
+
+
+controller.webserver.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname+'/index.html'));
 });
 
 // Create a route for the install link.
