@@ -22,8 +22,11 @@
   "homepage": "https://github.com/plainlab/meme#readme",
   "dependencies": {
     "botbuilder-adapter-slack": "^1.0.14",
+    "botkit": "^4.15.0",
+    "dotenv": "^16.0.1",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
+    "request": "^2.88.2",
     "sequelize": "^6.21.3"
   }
 }
