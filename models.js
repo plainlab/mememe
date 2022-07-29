@@ -18,6 +18,12 @@ const Team = sequelize.define("Team", {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    license: {
+        type: DataTypes.STRING,
+    },
+    active: {
+        type: DataTypes.BOOLEAN,
+    },
 });
 
 const User = sequelize.define("User", {
