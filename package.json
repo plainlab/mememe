@@ -1,0 +1,29 @@
+{
+  "name": "meme",
+  "version": "0.0.1",
+  "description": "Plain Meme Slack bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/plainlab/meme.git"
+  },
+  "keywords": [
+    "meme",
+    "slack"
+  ],
+  "author": "PlainLab",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/plainlab/meme/issues"
+  },
+  "homepage": "https://github.com/plainlab/meme#readme",
+  "dependencies": {
+    "botbuilder-adapter-slack": "^1.0.14",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.21.3"
+  }
+}
