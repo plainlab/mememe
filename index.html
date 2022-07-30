@@ -157,15 +157,18 @@
                 line-height: 1.5rem;
                 opacity: 0.7;
             }
+            code {
+                font-family: 'Courier New', Courier, monospace;
+                color: crimson;
+            }
 
             .content {
                 padding: 0.5rem;
-                margin-top: 3rem;
+                margin-top: 2rem;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                text-align: center;
             }
 
             .contact {
@@ -180,37 +183,15 @@
                 opacity: 0.5;
             }
 
-            .product-container {
-                display: grid;
-                grid-gap: 1rem;
-                grid-template-columns: repeat(1, minmax(0, 1fr));
-                margin-top: 2rem;
-                padding: 0.5rem;
-            }
-
-            .product-item {
-                border-radius: 1rem;
-                border: 1px solid #dadce0;
-                padding: 1rem;
-                font-size: 1.5rem;
-                text-align: center;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                background-color: white;
-                color: rgb(55, 65, 81);
-            }
-
-            .product-item:hover {
-                background-color: rgb(243, 244, 246);
-                cursor: pointer;
-            }
-
-            .privacy {
+            .manual {
                 margin: auto;
                 max-width: 40rem;
                 padding: 2rem;
+            }
+
+            .demo {
+              width: 400px;
+              max-width: 100%;
             }
 
             .logo {
@@ -223,23 +204,34 @@
         <section class="content">
             <h1>Plain Meme</h1>
             <p>Easiest way to Meme on Slack!</p>
-
-            <section class="product-container">
-                <a
-                    href="https://slack.com/oauth/v2/authorize?client_id=764852135511.3861915335174&scope=commands,users:read&user_scope="
-                    ><img
-                        alt="Add to Slack"
-                        height="40"
-                        width="139"
-                        src="https://platform.slack-edge.com/img/add_to_slack.png"
-                        srcset="
-                            https://platform.slack-edge.com/img/add_to_slack.png    1x,
-                            https://platform.slack-edge.com/img/add_to_slack@2x.png 2x
-                        "
-                /></a>
-            </section>
         </section>
-        <article class="privacy">
+        <section class="content">
+            <a
+                href="https://slack.com/oauth/v2/authorize?client_id=764852135511.3861915335174&scope=commands,users:read&user_scope="
+                ><img
+                    alt="Add to Slack"
+                    height="40"
+                    width="139"
+                    src="https://platform.slack-edge.com/img/add_to_slack.png"
+                    srcset="
+                        https://platform.slack-edge.com/img/add_to_slack.png    1x,
+                        https://platform.slack-edge.com/img/add_to_slack@2x.png 2x
+                    "
+            /></a>
+        </section>
+        <section class="manual">
+            <h2>Usage</h2>
+            <p>1. List all meme keys using <code>/meme list</code></p>
+            <p>
+                2. Post your custom meme to Slack
+                <code>/meme meme_key | text 1 | text 2 | text n</code>
+            </p>
+            <img
+                class="demo"
+                src="https://raw.githubusercontent.com/plainlab/meme/main/demo.png"
+            />
+        </section>
+        <article class="manual">
             <h2>Privacy</h2>
 
             <p>
@@ -277,8 +269,6 @@
                 questions.
             </p>
         </article>
-        <footer class="footer">
-            PlainLab &copy; 2022
-        </footer>
+        <footer class="footer">PlainLab &copy; 2022</footer>
     </body>
 </html>
