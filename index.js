@@ -56,7 +56,7 @@ controller.webserver.get('/install/auth', async (req, res) => {
         // customize your post-install success page
         res.send('Success! Bot installed.');
     } catch (err) {
-        console.error('OAUTH ERROR:', err);
+        console.error('Oauth err:', err);
         // customize your post-install failure page
         res.status(401);
         res.send(err.message);
@@ -115,7 +115,6 @@ controller.on('slash_command', async (bot, message) => {
             return;
         }
 
-        console.log(template);
         if (template.indexOf('@') === 0) {
             const name = template.slice(1);
             const user = await svc.getUser(bot, message.team_id, name);

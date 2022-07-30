@@ -31,7 +31,7 @@ const getUser = async (bot, teamId, name) => {
         }
         return await User.findOne({ where: { teamId, name } });
     } catch (err) {
-        console.log(err);
+        console.error('Get user err:', err);
         return null;
     }
 };

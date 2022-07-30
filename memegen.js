@@ -15,6 +15,7 @@ const getMemeTemplates = async () => {
         });
         return [ids, templates];
     } catch (err) {
+        console.error('List meme err:', err);
         return [[], {}];
     }
 };

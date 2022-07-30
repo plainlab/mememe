@@ -1,148 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <link rel="icon" href="https://plainlab.github.io/favicon.ico" />
-    <link rel="apple-touch-icon" href="https://plainlab.github.io/plainlabs.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Plain Meme &middot; Easiest way to meme on Slack</title>
-    <style>
-    html, body, div, span, applet, object, iframe,
-    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-    a, abbr, acronym, address, big, cite, code,
-    del, dfn, em, img, ins, kbd, q, s, samp,
-    small, strike, strong, sub, sup, tt, var,
-    b, u, i, center,
-    dl, dt, dd, ol, ul, li,
-    fieldset, form, label, legend,
-    table, caption, tbody, tfoot, thead, tr, th, td,
-    article, aside, canvas, details, embed,
-    figure, figcaption, footer, header, hgroup,
-    menu, nav, output, ruby, section, summary,
-    time, mark, audio, video {
-      margin: 0;
-      padding: 0;
-      border: 0;
-      font-size: 100%;
-      font: inherit;
-      vertical-align: baseline;
-    }
-    article, aside, details, figcaption, figure, 
-    footer, header, hgroup, menu, nav, section {
-      display: block;
-    }
-    body {
-      line-height: 1;
-    }
-    ol, ul {
-      list-style: none;
-    }
-    blockquote, q {
-      quotes: none;
-    }
-    blockquote:before, blockquote:after,
-    q:before, q:after {
-      content: '';
-      content: none;
-    }
-    table {
-      border-collapse: collapse;
-      border-spacing: 0;
-    }
-    body {
-      color: rgb(31, 41, 55);
-      background-color: rgb(249, 250, 251);
-    }
-    h1 {
-      font-size: 1.5rem;
-      line-height: 3rem;
-      font-weight: medium;
-    }
-    h2 {
-      font-size: 1.25rem;
-      line-height: 2rem;
-      font-weight: medium;
-    }
-    p {
-      font-size: 1rem;
-      line-height: 1.5rem;
-      opacity: 0.7;
-    }
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="icon" href="https://plainlab.github.io/favicon.ico" />
+        <link
+            rel="apple-touch-icon"
+            href="https://plainlab.github.io/plainlabs.png"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Plain Meme &middot; Easiest way to meme on Slack</title>
+        <style>
+            html,
+            body,
+            div,
+            span,
+            applet,
+            object,
+            iframe,
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6,
+            p,
+            blockquote,
+            pre,
+            a,
+            abbr,
+            acronym,
+            address,
+            big,
+            cite,
+            code,
+            del,
+            dfn,
+            em,
+            img,
+            ins,
+            kbd,
+            q,
+            s,
+            samp,
+            small,
+            strike,
+            strong,
+            sub,
+            sup,
+            tt,
+            var,
+            b,
+            u,
+            i,
+            center,
+            dl,
+            dt,
+            dd,
+            ol,
+            ul,
+            li,
+            fieldset,
+            form,
+            label,
+            legend,
+            table,
+            caption,
+            tbody,
+            tfoot,
+            thead,
+            tr,
+            th,
+            td,
+            article,
+            aside,
+            canvas,
+            details,
+            embed,
+            figure,
+            figcaption,
+            footer,
+            header,
+            hgroup,
+            menu,
+            nav,
+            output,
+            ruby,
+            section,
+            summary,
+            time,
+            mark,
+            audio,
+            video {
+                margin: 0;
+                padding: 0;
+                border: 0;
+                font-size: 100%;
+                font: inherit;
+                vertical-align: baseline;
+            }
+            article,
+            aside,
+            details,
+            figcaption,
+            figure,
+            footer,
+            header,
+            hgroup,
+            menu,
+            nav,
+            section {
+                display: block;
+            }
+            body {
+                line-height: 1;
+            }
+            ol,
+            ul {
+                list-style: none;
+            }
+            blockquote,
+            q {
+                quotes: none;
+            }
+            blockquote:before,
+            blockquote:after,
+            q:before,
+            q:after {
+                content: '';
+                content: none;
+            }
+            table {
+                border-collapse: collapse;
+                border-spacing: 0;
+            }
+            body {
+                color: rgb(31, 41, 55);
+                background-color: rgb(249, 250, 251);
+            }
+            h1 {
+                font-size: 2rem;
+                line-height: 4rem;
+                font-weight: medium;
+            }
+            h2 {
+                font-size: 1.5rem;
+                line-height: 3rem;
+                font-weight: medium;
+            }
+            h3 {
+                font-size: 1.25rem;
+                line-height: 2.5rem;
+            }
+            p {
+                font-size: 1rem;
+                line-height: 1.5rem;
+                opacity: 0.7;
+            }
 
-    .content {
-      padding: 0.5rem;
-      margin-top: 3rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
+            .content {
+                padding: 0.5rem;
+                margin-top: 3rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
 
-    .contact {
-      margin-top: 2rem;
-      opacity: 0.7;
-    }
+            .contact {
+                margin-top: 2rem;
+                opacity: 0.7;
+            }
 
-    .footer {
-      margin: 3rem 0 1rem;
-      text-align: center;
-      font-size: 0.8rem;
-      opacity: 0.5;
-    }
+            .footer {
+                margin: 3rem 0 1rem;
+                text-align: center;
+                font-size: 0.8rem;
+                opacity: 0.5;
+            }
 
-    .product-container {
-      display: grid;
-      grid-gap: 1rem;
-      grid-template-columns: repeat(1, minmax(0, 1fr));
-      margin-top: 2rem;
-      padding: 0.5rem;
-    }
+            .product-container {
+                display: grid;
+                grid-gap: 1rem;
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+                margin-top: 2rem;
+                padding: 0.5rem;
+            }
 
-    .product-item {
-      border-radius: 1rem;
-      border: 1px solid #dadce0;
-      padding: 1rem;
-      font-size: 1.5rem;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background-color: white;
-      color: rgb(55, 65, 81);
-    }
+            .product-item {
+                border-radius: 1rem;
+                border: 1px solid #dadce0;
+                padding: 1rem;
+                font-size: 1.5rem;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background-color: white;
+                color: rgb(55, 65, 81);
+            }
 
-    .product-item:hover {
-      background-color: rgb(243, 244, 246);
-      cursor: pointer;
-    }
+            .product-item:hover {
+                background-color: rgb(243, 244, 246);
+                cursor: pointer;
+            }
 
-    .logo {
-      width: 7rem;
-      height: 7rem;
-    }
+            .privacy {
+                margin: auto;
+                max-width: 40rem;
+                padding: 2rem;
+            }
 
-    </style>
-  </head>
-  <body>
-    <main class="content">
-      <h1>Plain Meme</h1>
-      <p>Easiest way to meme on Slack</p>
+            .logo {
+                width: 7rem;
+                height: 7rem;
+            }
+        </style>
+    </head>
+    <body>
+        <section class="content">
+            <h1>Plain Meme</h1>
+            <p>Easiest way to Meme on Slack!</p>
 
-      <section class="product-container">
-        <a class="product-item" href="/install">
-          <h2>Install to your Slack</h2>
-        </a>
-      </section>
-    </main>
-    <footer class="footer">
-      <a href="https://github.com/plainlab">PlainLab</a> &copy; 2022
-    </footer>
-  </body>
+            <section class="product-container">
+                <a
+                    href="https://slack.com/oauth/v2/authorize?client_id=764852135511.3861915335174&scope=commands,users:read&user_scope="
+                    ><img
+                        alt="Add to Slack"
+                        height="40"
+                        width="139"
+                        src="https://platform.slack-edge.com/img/add_to_slack.png"
+                        srcset="
+                            https://platform.slack-edge.com/img/add_to_slack.png    1x,
+                            https://platform.slack-edge.com/img/add_to_slack@2x.png 2x
+                        "
+                /></a>
+            </section>
+        </section>
+        <article class="privacy">
+            <h2>Privacy</h2>
+
+            <p>
+                This privacy notice discloses the privacy practices for Plain
+                Meme. This privacy notice applies solely to information
+                collected by this website. It was last updated July 30, 2022.
+            </p>
+
+            <h3>Information Collection</h3>
+            <p>
+                We are the sole owners of the information collected on this
+                site. We only have access to collect information that you
+                voluntarily give us via email or other direct contact from you.
+                We will not sell or rent this information to anyone.
+            </p>
+
+            <p>
+                You can revoke access to the Slack app by uninstalling the
+                application from your workspace.
+            </p>
+
+            <h3>Security</h3>
+            <p>
+                We take precautions to protect your information. When you submit
+                sensitive information via the website, your information is
+                encrypted and transmitted to us in a secure way. Your generated
+                Slack access tokens are stored in a secure database and can be
+                revoked at any time.
+            </p>
+
+            <h2>Support</h2>
+            <p>
+                Contact us via
+                <a href="mailto:plain@manhtai.com">email</a> if you have any
+                questions.
+            </p>
+        </article>
+        <footer class="footer">
+            PlainLab &copy; 2022
+        </footer>
+    </body>
 </html>
