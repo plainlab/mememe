@@ -1,18 +1,23 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const { Sequelize, DataTypes } = require("sequelize");
+const { Sequelize, DataTypes } = require('sequelize');
+
+const dialectOptions =
+    process.env.ENV === 'test'
+        ? {}
+        : {
+              ssl: {
+                  require: true,
+                  rejectUnauthorized: false,
+              },
+          };
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false
-    }
-  },
+    dialectOptions,
 });
 
 // Models
-const Team = sequelize.define("Team", {
+const Team = sequelize.define('Team', {
     teamId: {
         type: DataTypes.STRING,
         primaryKey: true,
@@ -33,7 +38,7 @@ const Team = sequelize.define("Team", {
     },
 });
 
-const User = sequelize.define("User", {
+const User = sequelize.define('User', {
     userId: {
         type: DataTypes.STRING,
         primaryKey: true,
@@ -53,7 +58,6 @@ const User = sequelize.define("User", {
         type: DataTypes.TEXT,
     },
 });
-
 
 // Migrate
 (async () => {

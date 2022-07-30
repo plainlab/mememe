@@ -4,7 +4,7 @@ const { SlackAdapter } = require('botbuilder-adapter-slack');
 const { Botkit } = require('botkit');
 const path = require('path');
 const svc = require('./services');
-const meme = require('./meme');
+const meme = require('./memegen');
 const util = require('./util');
 
 const adapter = new SlackAdapter({
@@ -28,9 +28,8 @@ const controller = new Botkit({
     adapter,
 });
 
-
 controller.webserver.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname+'/index.html'));
+    res.sendFile(path.join(__dirname + '/index.html'));
 });
 
 // Create a route for the install link.
@@ -68,87 +67,77 @@ controller.on('slash_command', async (bot, message) => {
     if (message.text === '' || message.text === 'help') {
         bot.replyPrivate(
             message,
-            'Post a meme: /meme template_name | top_row | bottom_row\nList meme templates: /meme list'
+            'Post a meme: /meme meme_key | top text | bottom text\nList all meme keys: /meme list'
         );
     } else if (message.text === 'list') {
-        meme.getMemeTemplates((err, list, templates) => {
-            if (err) {
-                bot.replyPrivate(
-                    message,
-                    'Get templates error, please try again later!'
-                );
+        const [ids, templates] = await meme.getMemeTemplates();
+        if (!ids.length) {
+            bot.replyPrivate(
+                message,
+                'Failed to list templates, please try again!'
+            );
+            return;
+        }
+        let helpText = [];
+        ids.forEach((key) => {
+            helpText.push(`\`${key}\`: ${templates[key].name}`);
+        });
+        helpText.sort();
+        bot.replyPrivate(message, helpText.join('\n'));
+    } else {
+        const lines = message.text.split('|').map((it) => it.trim());
+        let template = lines[0];
+        let texts = lines
+            .slice(1)
+            .map((x) => x && encodeURIComponent(x.split(' ').join('_')));
+        let bg;
+
+        const [ids, templates] = await meme.getMemeTemplates();
+        if (!ids.length) {
+            bot.replyPrivate(
+                message,
+                'Failed to get templates, please try again!'
+            );
+            return;
+        }
+
+        if (templates[template]) {
+            bot.replyPublic(message, {
+                attachments: meme.buildAttachments(template, texts, bg),
+            });
+            return;
+        }
+
+        if (template.indexOf('http') === 0) {
+            bot.replyPublic(message, {
+                attachments: meme.buildAttachments('custom', texts, template),
+            });
+            return;
+        }
+
+        console.log(template);
+        if (template.indexOf('@') === 0) {
+            const name = template.slice(1);
+            const user = await svc.getUser(bot, message.team_id, name);
+            if (user) {
+                bot.replyPublic(message, {
+                    attachments: meme.buildAttachments(
+                        'custom',
+                        texts,
+                        user.profileImage
+                    ),
+                });
                 return;
             }
-            let helpText = [];
-            list.forEach((key) => {
-                helpText.push(`\`${key}\`: ${templates[key].name}`);
-            });
-            helpText.sort();
-            bot.replyPrivate(message, helpText.join('\n'));
+        }
+
+        // Randomize for now
+        let random = util.randomInt(0, ids.length);
+        if (lines.length === 1) texts = [template];
+        template = ids[random];
+        bot.replyPublic(message, {
+            attachments: meme.buildAttachments(template, texts),
         });
-    } else {
-        let lines = message.text.split('|').map((it) => it.trim());
-        let [template, top, bottom] = lines;
-        [top, bottom] = [top, bottom].map(
-            (x) => x && encodeURIComponent(x.split(' ').join('_'))
-        );
-        let alt;
-
-        const templatePromise = new Promise(function (resolve, reject) {
-            meme.getMemeTemplates((err, list, templates) => {
-                if (err) {
-                    reject();
-                    return;
-                }
-
-                if (templates[template]) {
-                    resolve(template);
-                    return;
-                }
-
-                if (template.indexOf('http') === 0) {
-                    alt = template;
-                    template = 'custom';
-                    resolve(template);
-                    return;
-                }
-
-                if (template.indexOf('@') === 0) {
-                    const name = template.slice(1);
-                    return Promise.resolve(
-                        svc.getUser(bot, message.team_id, name).then((user) => {
-                            if (user) {
-                                alt = user.profileImage;
-                                template = 'custom';
-                                resolve(template);
-                            }
-                        })
-                    );
-                }
-
-                let random = util.randomInt(0, list.length);
-                if (lines.length === 1) top = template;
-                template = list[random];
-                resolve(template);
-                return;
-            });
-        });
-
-        templatePromise
-            .then((template) => {
-                let meme_url = meme.buildUrl(template, top, bottom, alt);
-                let attachments = [
-                    {
-                        image_url: meme_url,
-                        fallback: [top, bottom].join(' | '),
-                    },
-                ];
-                bot.replyPublic(message, {
-                    attachments: attachments,
-                });
-            })
-            .catch(() => {
-                bot.replyPrivate(message, 'Something went wrong!');
-            });
+        return;
     }
 });
