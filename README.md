@@ -3,7 +3,11 @@
 > Easiest way to Meme on Slack!
 
 
-## Demo
+## Usage
+
+1. List all meme keys: `/meme list`
+2. Post your custom meme to Slack: `/meme meme_key | text 1 | text 2 | text n`
+
 
 ![demo](./demo.png)
 
