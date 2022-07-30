@@ -67,7 +67,7 @@ controller.on('slash_command', async (bot, message) => {
     if (message.text === '' || message.text === 'help') {
         bot.replyPrivate(
             message,
-            'Post a meme: /meme meme_key | top text | bottom text\nList all meme keys: /meme list'
+            'Post a meme: /meme meme-key | top text | bottom text\nList all meme keys: /meme list'
         );
     } else if (message.text === 'list') {
         const [ids, templates] = await meme.getMemeTemplates();
