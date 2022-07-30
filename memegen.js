@@ -1,7 +1,9 @@
+require('dotenv').config();
+
 const fetch = require('node-fetch');
 const NodeCache = require('node-cache');
 
-const BASE_URL = 'https://api.memegen.link';
+const BASE_URL = process.env.MEMEGEN_URI || 'https://api.memegen.link';
 const cache = new NodeCache();
 
 const getMemeTemplatesNoCache = async () => {
