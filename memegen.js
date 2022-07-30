@@ -39,8 +39,8 @@ const getMemeTemplates = async () => {
 const buildUrl = (key, texts, bg) => {
     const textPath = texts.map((t) => t || '_').join('/') || '_';
     return bg
-        ? `${BASE_URL}/images/${key}/${textPath}.jpg?background=${bg}`
-        : `${BASE_URL}/images/${key}/${textPath}.jpg`;
+        ? `${BASE_URL}/images/${key}/${textPath}.jpg?background=${bg}&font=notosans`
+        : `${BASE_URL}/images/${key}/${textPath}.jpg?font=notosans`;
 };
 
 const buildAttachments = (key, texts, bg) => {
