@@ -63,7 +63,8 @@ const buildUrl = (key, texts, bg, font, height) => {
 };
 
 const buildAttachments = (key, texts, bg) => {
-    const memeUrl = buildUrl(key, texts, bg, 'notosans');
+    const font = texts && texts.length ? 'notosans' : null;
+    const memeUrl = buildUrl(key, texts, bg, font);
     return [
         {
             image_url: memeUrl,
