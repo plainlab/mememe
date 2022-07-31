@@ -6,6 +6,9 @@ const NodeCache = require('node-cache');
 const BASE_URL = process.env.MEMEGEN_URI || 'https://api.memegen.link';
 const cache = new NodeCache();
 
+// Mostly because of too heavy
+const excludedTemplates = { ptj: true };
+
 const getMemeTemplatesNoCache = async () => {
     const templatesLink = `${BASE_URL}/templates`;
     try {
@@ -14,8 +17,10 @@ const getMemeTemplatesNoCache = async () => {
         const templates = {};
         const ids = [];
         list.forEach((temp) => {
-            templates[temp.id] = temp;
-            ids.push(temp.id);
+            if (!excludedTemplates[temp.id]) {
+                templates[temp.id] = temp;
+                ids.push(temp.id);
+            }
         });
         return [ids, templates];
     } catch (err) {
