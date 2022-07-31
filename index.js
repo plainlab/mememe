@@ -37,9 +37,10 @@ controller.webserver.get('/', (req, res) => {
 });
 
 controller.webserver.get('/list', async (req, res) => {
-    const [ids] = await meme.getMemeTemplates();
+    const [ids, templates] = await meme.getMemeTemplates();
     const memes = ids.map((key) => ({
         key,
+        name: templates[key].name,
         url: meme.buildUrl(key, [], null, null, 250),
     }));
     res.render('list', { memes });
@@ -80,7 +81,7 @@ controller.on('slash_command', async (bot, message) => {
     if (message.text === '' || message.text === 'help') {
         bot.replyPrivate(
             message,
-            `Post a meme: /meme meme-key | top text | bottom text\nGallery: ${memeListUrl}`
+            `Post a meme: /meme meme-key | top text | bottom text\n👉 Gallery: ${memeListUrl}`
         );
     } else if (message.text === 'list') {
         const [ids, templates] = await meme.getMemeTemplates();
@@ -96,7 +97,7 @@ controller.on('slash_command', async (bot, message) => {
             helpText.push(`\`${key}\`: ${templates[key].name}`);
         });
         helpText.sort();
-        helpText.push(`Gallery: ${memeListUrl}`);
+        helpText.push(`👉 Gallery: ${memeListUrl}`);
         bot.replyPrivate(message, helpText.join('\n'));
     } else {
         const lines = message.text.split('|').map((it) => it.trim());
