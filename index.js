@@ -28,8 +28,14 @@ const controller = new Botkit({
     adapter,
 });
 
+controller.webserver.set('view engine', 'ejs');
+
 controller.webserver.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname + '/index.html'));
+    res.render('index');
+});
+
+controller.webserver.get('/list', (req, res) => {
+    res.render('list', { title: 'Hey', message: 'Hello there!' });
 });
 
 // Create a route for the install link.
