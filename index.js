@@ -2,17 +2,19 @@ require('dotenv').config();
 
 const { SlackAdapter } = require('botbuilder-adapter-slack');
 const { Botkit } = require('botkit');
-const path = require('path');
 const svc = require('./services');
 const meme = require('./memegen');
 const util = require('./util');
+
+const memeListUrl = `${process.env.BASE_URL}/list`;
+const redirectUri = `${process.env.BASE_URL}/install/auth`;
 
 const adapter = new SlackAdapter({
     clientSigningSecret: process.env.SLACK_SECRET,
     clientId: process.env.CLIENT_ID, // oauth client id
     clientSecret: process.env.CLIENT_SECRET, // oauth client secret
     scopes: ['commands', 'users:read'], // oauth scopes requested, 'bot' deprecated by Slack in favor of granular permissions
-    redirectUri: process.env.REDIRECT_URI, // url to redirect post-login
+    redirectUri, // url to redirect post-login
     oauthVersion: 'v2', // or use v2
     getTokenForTeam: async (team_id) => {
         const team = await svc.getTeam(team_id);
@@ -28,8 +30,19 @@ const controller = new Botkit({
     adapter,
 });
 
+controller.webserver.set('view engine', 'ejs');
+
 controller.webserver.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname + '/index.html'));
+    res.render('index');
+});
+
+controller.webserver.get('/list', async (req, res) => {
+    const [ids] = await meme.getMemeTemplates();
+    const memes = ids.map((key) => ({
+        key,
+        url: meme.buildUrl(key, [], null, null, 250),
+    }));
+    res.render('list', { memes });
 });
 
 // Create a route for the install link.
@@ -67,7 +80,7 @@ controller.on('slash_command', async (bot, message) => {
     if (message.text === '' || message.text === 'help') {
         bot.replyPrivate(
             message,
-            'Post a meme: /meme meme-key | top text | bottom text\nList all meme keys: /meme list'
+            `Post a meme: /meme meme-key | top text | bottom text\nGallery: ${memeListUrl}`
         );
     } else if (message.text === 'list') {
         const [ids, templates] = await meme.getMemeTemplates();
@@ -83,6 +96,7 @@ controller.on('slash_command', async (bot, message) => {
             helpText.push(`\`${key}\`: ${templates[key].name}`);
         });
         helpText.sort();
+        helpText.push(`Gallery: ${memeListUrl}`);
         bot.replyPrivate(message, helpText.join('\n'));
     } else {
         const lines = message.text.split('|').map((it) => it.trim());

@@ -24,6 +24,7 @@
         "botbuilder-adapter-slack": "^1.0.14",
         "botkit": "^4.15.0",
         "dotenv": "^16.0.1",
+        "ejs": "^3.1.8",
         "node-cache": "^5.1.2",
         "node-fetch": "^2.6.7",
         "pg": "^8.7.3",

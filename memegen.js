@@ -38,15 +38,27 @@ const getMemeTemplates = async () => {
     return result;
 };
 
-const buildUrl = (key, texts, bg) => {
+const buildUrl = (key, texts, bg, font, height) => {
     const textPath = texts.map((t) => t || '_').join('/') || '_';
-    return bg
-        ? `${BASE_URL}/images/${key}/${textPath}.jpg?background=${bg}&font=notosans`
-        : `${BASE_URL}/images/${key}/${textPath}.jpg?font=notosans`;
+    const url = new URL(`${BASE_URL}/images/${key}/${textPath}.jpg`);
+
+    if (font) {
+        url.searchParams.set('font', font);
+    }
+
+    if (bg) {
+        url.searchParams.set('background', bg);
+    }
+
+    if (height) {
+        url.searchParams.set('height', height);
+    }
+
+    return url.toString();
 };
 
 const buildAttachments = (key, texts, bg) => {
-    const memeUrl = buildUrl(key, texts, bg);
+    const memeUrl = buildUrl(key, texts, bg, 'notosans');
     return [
         {
             image_url: memeUrl,
@@ -58,4 +70,5 @@ const buildAttachments = (key, texts, bg) => {
 module.exports = {
     getMemeTemplates,
     buildAttachments,
+    buildUrl,
 };
