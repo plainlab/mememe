@@ -1,7 +1,12 @@
 <%- include('_head'); %>
 
-<section>
-    Hello
-</section>
+<div class="image-container">
+    <% memes.forEach(function(meme){ %>
+    <div class="image-item">
+        <div><span class="image-key"><%= meme.key %></span></div>
+        <img src="<%= meme.url %>" alt="<% meme.key %>" loading="lazy" />
+    </div>
+    <% }); %>
+</div>
 
 <%- include('_foot'); %>

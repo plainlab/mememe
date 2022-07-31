@@ -190,13 +190,38 @@
             }
 
             .demo {
-                width: 400px;
+                width: 25rem;
                 max-width: 100%;
             }
 
             .logo {
                 width: 7rem;
                 height: 7rem;
+            }
+
+            .image-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                grid-gap: 2rem;
+                margin: 1rem auto;
+                padding: 1rem;
+                max-width: 70rem;
+            }
+
+            .image-item {
+                position: relative;
+            }
+
+            .image-item img {
+                overflow: hidden;
+                width: 100%;
+                border-radius: 1rem;
+            }
+
+            .image-key {
+                line-height: 1.5rem;
+                padding: 1rem;
+                color: crimson;
             }
         </style>
     </head>
