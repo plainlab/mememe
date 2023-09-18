@@ -1,4 +1,4 @@
-# PlainMeme
+# Mememe
 
 > Easiest way to Meme on Slack!
 
