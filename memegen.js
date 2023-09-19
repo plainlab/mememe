@@ -62,11 +62,12 @@ const buildUrl = (key, texts, bg, font, height) => {
     return url.toString();
 };
 
-const buildAttachments = (key, texts, bg) => {
+const buildAttachments = (from, key, texts, bg) => {
     const font = texts && texts.length ? 'notosans' : null;
     const memeUrl = buildUrl(key, texts, bg, font);
     return [
         {
+            text: `From @${from}`,
             image_url: memeUrl,
             fallback: texts.join(' | '),
         },

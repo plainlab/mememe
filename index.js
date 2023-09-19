@@ -119,14 +119,24 @@ controller.on('slash_command', async (bot, message) => {
 
         if (templates[template]) {
             bot.replyPublic(message, {
-                attachments: meme.buildAttachments(template, texts, bg),
+                attachments: meme.buildAttachments(
+                    message.user_name,
+                    template,
+                    texts,
+                    bg
+                ),
             });
             return;
         }
 
         if (template.indexOf('http') === 0) {
             bot.replyPublic(message, {
-                attachments: meme.buildAttachments('custom', texts, template),
+                attachments: meme.buildAttachments(
+                    message.user_name,
+                    'custom',
+                    texts,
+                    template
+                ),
             });
             return;
         }
@@ -137,6 +147,7 @@ controller.on('slash_command', async (bot, message) => {
             if (user) {
                 bot.replyPublic(message, {
                     attachments: meme.buildAttachments(
+                        message.user_name,
                         'custom',
                         texts,
                         user.profileImage
@@ -151,7 +162,11 @@ controller.on('slash_command', async (bot, message) => {
         if (lines.length === 1) texts = [template];
         template = ids[random];
         bot.replyPublic(message, {
-            attachments: meme.buildAttachments(template, texts),
+            attachments: meme.buildAttachments(
+                message.user_name,
+                template,
+                texts
+            ),
         });
         return;
     }
