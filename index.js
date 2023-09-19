@@ -78,6 +78,7 @@ controller.webserver.get('/install/auth', async (req, res) => {
 });
 
 controller.on('slash_command', async (bot, message) => {
+    console.log(message);
     if (message.text === '' || message.text === 'help') {
         bot.replyPrivate(
             message,
