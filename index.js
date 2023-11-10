@@ -33,14 +33,10 @@ const controller = new Botkit({
 
 controller.webserver.set('view engine', 'ejs');
 
-controller.webserver.get('/', (req, res) => {
-    res.render('index');
-});
-
-controller.webserver.get('/m.jpg', async (req, res) => {
+controller.webserver.get('/', async (req, res) => {
     const message = req.query['m'];
     if (!message) {
-        res.send('Not found');
+        res.render('index');
         return;
     }
 
@@ -69,10 +65,7 @@ controller.webserver.get('/m.jpg', async (req, res) => {
         return;
     }
 
-    fetch(url).then((actual) => {
-        actual.headers.forEach((v, n) => res.setHeader(n, v));
-        actual.body.pipe(res);
-    });
+    res.render('img', { meme: { url, name: template } });
 });
 
 controller.webserver.get('/list', async (req, res) => {

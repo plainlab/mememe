@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title><%= meme.name %></title>
+        <meta property="og:image" content="<%= meme.url %>"/>
+        <meta property="og:title" content="<%= meme.name %>"/>
+    </head>
+    <body>
+        <img src="<%= meme.url %>" alt="<%= meme.name %>" title="<%= meme.name %>" loading="lazy" />
+    </body>
+</html>
