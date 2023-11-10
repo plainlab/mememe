@@ -33,24 +33,10 @@ const controller = new Botkit({
 
 controller.webserver.set('view engine', 'ejs');
 
-controller.webserver.get('/', (req, res) => {
-    res.render('index');
-});
-
-controller.webserver.get('/list', async (req, res) => {
-    const [ids, templates] = await meme.getMemeTemplates();
-    const memes = ids.map((key) => ({
-        key,
-        name: templates[key].name,
-        url: meme.buildUrl(key, [], null, null, 250),
-    }));
-    res.render('list', { memes });
-});
-
-controller.webserver.get('/meme', async (req, res) => {
-    const message = req.query['m'] || req.query['msg'] || req.query['message'];
+controller.webserver.get('/', async (req, res) => {
+    const message = req.query['m'];
     if (!message) {
-        res.send('Not found');
+        res.render('index');
         return;
     }
 
@@ -83,6 +69,16 @@ controller.webserver.get('/meme', async (req, res) => {
         actual.headers.forEach((v, n) => res.setHeader(n, v));
         actual.body.pipe(res);
     });
+});
+
+controller.webserver.get('/list', async (req, res) => {
+    const [ids, templates] = await meme.getMemeTemplates();
+    const memes = ids.map((key) => ({
+        key,
+        name: templates[key].name,
+        url: meme.buildUrl(key, [], null, null, 250),
+    }));
+    res.render('list', { memes });
 });
 
 // Create a route for the install link.
