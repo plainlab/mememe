@@ -33,10 +33,14 @@ const controller = new Botkit({
 
 controller.webserver.set('view engine', 'ejs');
 
-controller.webserver.get('/', async (req, res) => {
+controller.webserver.get('/', (req, res) => {
+    res.render('index');
+});
+
+controller.webserver.get('/m.jpg', async (req, res) => {
     const message = req.query['m'];
     if (!message) {
-        res.render('index');
+        res.send('Not found');
         return;
     }
 
