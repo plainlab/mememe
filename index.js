@@ -5,6 +5,7 @@ const { Botkit } = require('botkit');
 const svc = require('./services');
 const meme = require('./memegen');
 const util = require('./util');
+const fetch = require('node-fetch');
 
 const memeListUrl = `${process.env.BASE_URL}/list`;
 const redirectUri = `${process.env.BASE_URL}/install/auth`;
@@ -44,6 +45,44 @@ controller.webserver.get('/list', async (req, res) => {
         url: meme.buildUrl(key, [], null, null, 250),
     }));
     res.render('list', { memes });
+});
+
+controller.webserver.get('/meme', async (req, res) => {
+    const message = req.query['m'] || req.query['msg'] || req.query['message'];
+    if (!message) {
+        res.send('Not found');
+        return;
+    }
+
+    const lines = String(message)
+        .normalize()
+        .split('|')
+        .map((it) => it.trim());
+    let template = lines[0];
+    let texts = lines
+        .slice(1)
+        .map((x) => x && encodeURIComponent(x.split(' ').join('_')));
+    let url;
+
+    const [ids, templates] = await meme.getMemeTemplates();
+    if (!ids.length) {
+        res.send('Internal server error');
+        return;
+    }
+
+    if (templates[template]) {
+        url = meme.buildUrl(template, texts);
+    } else if (template.indexOf('http') === 0) {
+        url = meme.buildUrl('custom', texts, template);
+    } else {
+        res.send('Invalid request');
+        return;
+    }
+
+    fetch(url).then((actual) => {
+        actual.headers.forEach((v, n) => res.setHeader(n, v));
+        actual.body.pipe(res);
+    });
 });
 
 // Create a route for the install link.
