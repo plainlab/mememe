@@ -76,7 +76,7 @@ controller.webserver.get('/list', async (req, res) => {
     const memes = ids.map((key) => ({
         key,
         name: templates[key].name,
-        url: meme.buildUrl(key, [], null, null, 250),
+        url: meme.buildUrl(key, [], null, 250),
     }));
     res.render('list', { memes });
 });

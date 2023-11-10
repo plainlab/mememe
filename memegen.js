@@ -43,9 +43,10 @@ const getMemeTemplates = async () => {
     return result;
 };
 
-const buildUrl = (key, texts, bg, font, height) => {
+const buildUrl = (key, texts, bg, height) => {
     const textPath = texts.map((t) => t || '_').join('/') || '_';
     const url = new URL(`${BASE_URL}/images/${key}/${textPath}.jpg`);
+    const font = texts && texts.length ? 'notosans' : null;
 
     if (font) {
         url.searchParams.set('font', font);
@@ -63,8 +64,7 @@ const buildUrl = (key, texts, bg, font, height) => {
 };
 
 const buildAttachments = (from, key, texts, bg) => {
-    const font = texts && texts.length ? 'notosans' : null;
-    const memeUrl = buildUrl(key, texts, bg, font);
+    const memeUrl = buildUrl(key, texts, bg);
     return [
         {
             text: `From @${from}`,
